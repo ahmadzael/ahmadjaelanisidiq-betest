@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class WebResponse<T> {
-    private T data;
+public class AuthenticationRequest {
 
-    private String errors;
+    private String email;
+    String password;
 }
