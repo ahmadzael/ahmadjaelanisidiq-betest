@@ -19,14 +19,14 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService service;
 
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public ResponseEntity<String> register(
             @RequestBody RegisterRequest request
     ) {
         return ResponseEntity.ok(service.register(request));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<TokenResponse> authenticate(
             @RequestBody LoginRequest request
     ) {

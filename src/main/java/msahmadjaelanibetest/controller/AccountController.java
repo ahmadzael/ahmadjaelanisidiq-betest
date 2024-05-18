@@ -1,22 +1,25 @@
 package msahmadjaelanibetest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import msahmadjaelanibetest.entity.Account;
 import msahmadjaelanibetest.entity.User;
+import msahmadjaelanibetest.model.AccountResponse;
+import msahmadjaelanibetest.model.WebResponse;
 import msahmadjaelanibetest.repository.AccountRepository;
+import msahmadjaelanibetest.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class AccountController {
-//    get user info by accountNumber
-//    get user info by registrationNumber
-//    get account login by lastLoginDateTime > 3 days
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private AccountService accountService;
 
     @GetMapping(
             path = "/account"
@@ -26,10 +29,22 @@ public class AccountController {
     }
 
     @GetMapping(
-            path = "/account/{days}"
+            path = "/account/{lastLogin}"
     )
-    public List<Account> getAccount(String lastLogin){
-        return null;
+    public WebResponse<List<AccountResponse>> getAccountByLastLogin(@PathVariable int lastLogin) throws JsonProcessingException {
+
+        return accountService.getAccountByLastLogin(lastLogin);
+    }
+
+    @PatchMapping(
+            path = "/api/account/",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<AccountResponse> update(Account account, @RequestBody Account request){
+        AccountResponse accountResponse = accountService.updateAccount(account, request);
+
+        return WebResponse.<AccountResponse>builder().data(accountResponse).build();
     }
 
 }

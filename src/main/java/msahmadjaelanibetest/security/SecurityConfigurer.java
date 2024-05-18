@@ -31,7 +31,8 @@ public class SecurityConfigurer {
         "/v2/api-docs",
         "/v3/api-docs",
         "/v3/api-docs/**",
-        "/health-check"
+        "/health-check",
+        "/**",
     };
 
     private final LogoutService logoutHandler;

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -69,13 +70,11 @@ public class AuthenticationService {
 
         if (passwordEncoder.matches(request.getPassword(), account.getPassword())) {
             account.setToken(token);
-            account.setTokenExpiredAt(next30Days());
             account.setLastLoginDateTime(LocalDateTime.now());
             accountRepository.save(account);
 
             return TokenResponse.builder()
                     .token(account.getToken())
-                    .expiredAt(account.getTokenExpiredAt())
                     .build();
         } else {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Username Or Pasword wrong");
@@ -85,10 +84,5 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         return null;
     }
-
-    private Long next30Days(){
-        return System.currentTimeMillis() + (1000*16*24*30);
-    }
-
 
 }
