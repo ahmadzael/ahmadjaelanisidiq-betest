@@ -70,8 +70,20 @@ public class UserController {
 
             String jsonString = objectMapper.writeValueAsString(result);
             System.out.println("dari object mapper"+jsonString);
-            messageProducer.sendMessage("kafka_ahmadjaelani_betest",jsonString);
+            //messageProducer.sendMessage("kafka_ahmadjaelani_betest",jsonString);
 
+            Runnable kafkaMessageSender = new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        messageProducer.sendMessage("kafka_ahmadjaelani_betest", jsonString);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            new Thread(kafkaMessageSender).start();
+            return result;
         }
         return WebResponse.<UsersResponse>builder().data(null
         ).errors("UserNotFound").build();

@@ -1,0 +1,18 @@
+spring:
+  kafka:
+    bootstrap-servers: pkc-oz2po.ap-southeast-3.aws.confluent.cloud:9092
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username='SSLSMCJJ446MK3WR' password='QCWN7YH+uOO4mSDNT6QeOm+A+ZQ0ET2fWcoylgsDRO0EcUdRbSHtcS6+H9mTLuso';
+        mechanism: PLAIN
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      group-id: group_id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
