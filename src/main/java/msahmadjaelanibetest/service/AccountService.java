@@ -75,15 +75,9 @@ public class AccountService {
         return AccountResponse.builder()
                 .username(request.getUsername())
                 .lastLoginDateTime(account.getLastLoginDateTime())
+                .accountId(account.getAccountId())
+                .userId(account.getAccountId())
                 .build();
     }
 
-//    private AccountResponse convertToAccountResponse(Account account) {
-//        return AccountResponse.builder()
-//                .accountId(account.getAccountId())
-//                .userId(account.getUserId())
-//                .username(account.getUsername())
-//                .lastLoginDateTime(account.getLastLoginDateTime())
-//                .build();
-//    }
 }

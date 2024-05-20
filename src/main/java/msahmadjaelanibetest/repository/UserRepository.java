@@ -13,4 +13,6 @@ public interface UserRepository extends MongoRepository<User,String> {
     Optional<User> findFirstByRegistrationNumber(Object registrationNumber);
 
     Optional<User> findByAccountNumber(Object accountNumber);
+
+    Optional<User> findByUserId(Object userId);
 }

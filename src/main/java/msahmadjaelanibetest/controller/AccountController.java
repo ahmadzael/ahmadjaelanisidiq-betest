@@ -29,7 +29,7 @@ public class AccountController {
     }
 
     @GetMapping(
-            path = "/account/{lastLogin}"
+            path = "/api/account/{lastLogin}"
     )
     public WebResponse<List<AccountResponse>> getAccountByLastLogin(@PathVariable int lastLogin) throws JsonProcessingException {
 

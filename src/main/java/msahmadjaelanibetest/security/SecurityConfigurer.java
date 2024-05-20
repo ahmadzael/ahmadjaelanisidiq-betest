@@ -23,17 +23,10 @@ public class SecurityConfigurer {
     @Autowired
     private  JwtAuthenticationFilter jwtAuthFilter;
 
-
     @Autowired
     private  AuthenticationProvider authenticationProvider;
 
-    private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**",
-        "/v2/api-docs",
-        "/v3/api-docs",
-        "/v3/api-docs/**",
-        "/health-check",
-        "/**",
-    };
+    private static final String[] WHITE_LIST_URL = {"/auth/**", "/tools/**","/**"};
 
     private final LogoutService logoutHandler;
 

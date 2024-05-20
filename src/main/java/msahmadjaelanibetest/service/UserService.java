@@ -35,7 +35,16 @@ public class UserService {
         userRepository.save(request);
 
         return userRepository.findById(request.getUserId()).get();
+    }
 
+    @Transactional
+    public void deleteUser(String id){
+        Optional<User> user = userRepository.findByUserId(id);
+
+        if (user.isPresent()){
+            System.out.println("delete user "+user);
+            userRepository.delete(user.get());
+        }
     }
 
 }

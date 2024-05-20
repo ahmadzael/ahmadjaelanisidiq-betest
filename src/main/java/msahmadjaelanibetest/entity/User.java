@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @NoArgsConstructor
 @Document(collection = "user")
 public class User {
-    //userId, fullName, accountNumber, emailAddress,
-    //registrationNumber
-
     @Id
     private String userId;
 

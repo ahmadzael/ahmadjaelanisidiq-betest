@@ -9,6 +9,7 @@ import msahmadjaelanibetest.repository.UserRepository;
 import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,8 +35,8 @@ public class AuthenticationService {
 
     @Transactional
     public String register(RegisterRequest request) {
-
-        if(accountRepository.existsById(request.getUsername())){
+        Optional<UserDetails> byUsername = accountRepository.findByUsername(request.getUsername());
+        if(byUsername.isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Username already registered");
         }
 
@@ -52,8 +54,8 @@ public class AuthenticationService {
         Account account = new Account();
         account.setAccountId(UUID.randomUUID().toString());
         account.setUserId(user.getUserId());
-        account.setUsername(request.getEmail());
-        account.setPassword(bCrypt.encode(request.getPassword()));
+        account.setUsername(request.getUsername());
+        account.setPassword(BCrypt.hashpw(request.getPassword(), BCrypt.gensalt()));
 
         accountRepository.save(account);
 
@@ -80,6 +82,7 @@ public class AuthenticationService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Username Or Pasword wrong");
         }
     }
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         return null;
